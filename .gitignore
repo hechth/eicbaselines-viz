@@ -1,0 +1,8 @@
+node_modules/
+dist/
+static/
+coverage/
+*.log
+.DS_Store
+# Written per checkout: it names data paths on this machine. See config.example.json.
+test-data/config.json

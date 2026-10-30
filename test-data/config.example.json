@@ -1,0 +1,17 @@
+{
+  "_comment": "Copy this file to config.json (same directory) and edit it. config.json is gitignored because it names paths on your machine. Relative values resolve against the page URL, so a bare file name is looked up next to this file. An /@fs/ path is served by `npm run dev` only, and only for a directory listed in LOCAL_DATA_DIRS, e.g. `LOCAL_DATA_DIRS=/home/YOU/galaxytools npm run dev` — a config containing one must never be deployed.",
+  "samples": [
+    {
+      "id": "multigroup",
+      "name": "12 groups — group column in both tables",
+      "raw": "multigroup_input.parquet",
+      "corrected": "multigroup_result.parquet"
+    },
+    {
+      "id": "upstream",
+      "name": "pybaselines test data from a checkout (development only)",
+      "raw": "/@fs/home/YOU/galaxytools/tools/pybaselines/test-data/input.parquet",
+      "corrected": "/@fs/home/YOU/galaxytools/tools/pybaselines/test-data/result.parquet"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "eicbaselines",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "Interactive viewer for baseline-removed extracted ion chromatograms (pybaselines input/output parquet pairs)",
+  "keywords": [
+    "mass-spectrometry",
+    "chromatogram",
+    "extracted-ion-chromatogram",
+    "eic",
+    "baseline-correction",
+    "pybaselines",
+    "parquet",
+    "galaxy"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RECETOX/eicbaselines-viz.git"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.vue"
+  ],
+  "main": "./dist/eicbaselines.js",
+  "module": "./dist/eicbaselines.js",
+  "exports": {
+    ".": {
+      "import": "./dist/eicbaselines.js"
+    },
+    "./style.css": "./dist/eicbaselines.css",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --config vite.config.lib.js",
+    "build:app": "vite build",
+    "preview": "vite preview",
+    "prettier": "prettier --write 'package.json' '*.js' '*.html' 'src/**/*.{js,vue,css}'",
+    "test": "vitest --run",
+    "test:watch": "vitest --watch"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "dependencies": {
+    "hyparquet": "^1.31.5",
+    "uplot": "^1.6.32"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.3",
+    "happy-dom": "^20.0.11",
+    "prettier": "^3.7.4",
+    "vite": "^8.0.10",
+    "vitest": "^4.0.16",
+    "vue": "^3.5.26"
+  }
+}

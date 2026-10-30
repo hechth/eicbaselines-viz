@@ -1,0 +1,564 @@
+/*
+ * Viewer styling.
+ *
+ * Tokens are exposed as custom properties on the viewer root so the component tree is
+ * written against roles rather than raw hex, and so a host page (Galaxy) can override
+ * them. Dark values are declared twice on purpose: once under the OS preference and
+ * once under an explicit `data-eic-theme="dark"` stamp, so an embedding page can force
+ * a scheme and win both ways.
+ */
+
+.eicb-root {
+  color-scheme: light;
+
+  --eicb-surface: #fcfcfb;
+  --eicb-plane: #f9f9f7;
+  --eicb-text: #0b0b0b;
+  --eicb-text-secondary: #52514e;
+  --eicb-muted: #898781;
+  --eicb-grid: #e1e0d9;
+  --eicb-axis: #c3c2b7;
+  --eicb-border: rgba(11, 11, 11, 0.1);
+  --eicb-wash: rgba(11, 11, 11, 0.04);
+  --eicb-series-corrected: #2a78d6;
+  --eicb-series-raw: #eb6834;
+  --eicb-series-baseline: #1baf7a;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 16px;
+  background: var(--eicb-plane);
+  color: var(--eicb-text);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.eicb-root *,
+.eicb-root *::before,
+.eicb-root *::after {
+  box-sizing: border-box;
+}
+
+/* An author `display` rule outranks the UA sheet's `[hidden] { display: none }`, so the
+   overlays that set their own display have to honour `hidden` explicitly. */
+.eicb-root [hidden] {
+  display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .eicb-root:where(:not([data-eic-theme='light'])) {
+    color-scheme: dark;
+
+    --eicb-surface: #1a1a19;
+    --eicb-plane: #0d0d0d;
+    --eicb-text: #ffffff;
+    --eicb-text-secondary: #c3c2b7;
+    --eicb-muted: #898781;
+    --eicb-grid: #2c2c2a;
+    --eicb-axis: #383835;
+    --eicb-border: rgba(255, 255, 255, 0.1);
+    --eicb-wash: rgba(255, 255, 255, 0.06);
+    --eicb-series-corrected: #3987e5;
+    --eicb-series-raw: #d95926;
+    --eicb-series-baseline: #199e70;
+  }
+}
+
+.eicb-root[data-eic-theme='dark'] {
+  color-scheme: dark;
+
+  --eicb-surface: #1a1a19;
+  --eicb-plane: #0d0d0d;
+  --eicb-text: #ffffff;
+  --eicb-text-secondary: #c3c2b7;
+  --eicb-muted: #898781;
+  --eicb-grid: #2c2c2a;
+  --eicb-axis: #383835;
+  --eicb-border: rgba(255, 255, 255, 0.1);
+  --eicb-wash: rgba(255, 255, 255, 0.06);
+  --eicb-series-corrected: #3987e5;
+  --eicb-series-raw: #d95926;
+  --eicb-series-baseline: #199e70;
+}
+
+/* ---- header ---- */
+
+.eicb-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.eicb-head__text {
+  margin-right: auto;
+}
+
+.eicb-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.eicb-subtitle {
+  margin: 2px 0 0;
+  color: var(--eicb-text-secondary);
+  font-size: 12.5px;
+}
+
+/* ---- controls: one row, above the charts ---- */
+
+.eicb-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 10px;
+  background: var(--eicb-surface);
+}
+
+.eicb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.eicb-field__label {
+  color: var(--eicb-text-secondary);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.eicb-select,
+.eicb-input,
+.eicb-button {
+  padding: 7px 10px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 8px;
+  background: var(--eicb-surface);
+  color: var(--eicb-text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.eicb-select:focus-visible,
+.eicb-input:focus-visible,
+.eicb-button:focus-visible,
+.eicb-check input:focus-visible {
+  outline: 2px solid var(--eicb-series-corrected);
+  outline-offset: 1px;
+}
+
+.eicb-select--eic {
+  min-width: 320px;
+  max-width: 46vw;
+}
+
+.eicb-button {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.eicb-button:hover {
+  background: var(--eicb-wash);
+}
+
+.eicb-button[aria-pressed='true'] {
+  border-color: var(--eicb-series-corrected);
+  background: var(--eicb-wash);
+}
+
+.eicb-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.eicb-checks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.eicb-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.eicb-check input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--eicb-series-corrected);
+}
+
+/* ---- pinned EICs ---- */
+
+.eicb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.eicb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px 3px 9px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 999px;
+  background: var(--eicb-surface);
+  color: var(--eicb-text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.eicb-chip button {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--eicb-text-secondary);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.eicb-chip button:hover {
+  background: var(--eicb-wash);
+  color: var(--eicb-text);
+}
+
+/* ---- panels ---- */
+
+.eicb-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 10px;
+  background: var(--eicb-surface);
+}
+
+.eicb-panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.eicb-panel__title {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.eicb-panel__meta {
+  color: var(--eicb-text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.eicb-panel__spacer {
+  margin-left: auto;
+}
+
+/* ---- legend ---- */
+
+.eicb-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+}
+
+.eicb-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.eicb-legend li[data-off] {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+/* A short stroke of the series colour, matching the 2px line it stands for. */
+.eicb-key {
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.eicb-key[data-dashed='true'] {
+  height: 0;
+  border-top: 2px dashed currentColor;
+}
+
+/* ---- stat tiles ---- */
+
+.eicb-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.eicb-stat {
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 9px;
+  background: var(--eicb-plane);
+}
+
+.eicb-stat dt {
+  color: var(--eicb-text-secondary);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.eicb-stat dd {
+  margin: 2px 0 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.eicb-stat--hero dd {
+  font-size: 30px;
+}
+
+.eicb-stat__note {
+  display: block;
+  color: var(--eicb-muted);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+/* ---- tooltip ---- */
+
+.eicb-tip {
+  position: absolute;
+  z-index: 5;
+  min-width: 148px;
+  padding: 8px 10px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 8px;
+  background: var(--eicb-surface);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  color: var(--eicb-text);
+  font-size: 12.5px;
+  pointer-events: none;
+}
+
+.eicb-tip__x {
+  margin: 0 0 6px;
+  color: var(--eicb-text-secondary);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.eicb-tip__rows {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eicb-tip__row {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 7px;
+}
+
+/* Values lead, labels follow. */
+.eicb-tip__value {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.eicb-tip__name {
+  color: var(--eicb-text-secondary);
+}
+
+/* ---- direct label on the corrected apex ---- */
+
+.eicb-apex {
+  position: absolute;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px 3px 6px;
+  border: 1px solid var(--eicb-border);
+  border-radius: 999px;
+  background: var(--eicb-surface);
+  color: var(--eicb-text-secondary);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Identity rides on the mark, not on coloured text. */
+.eicb-apex__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--eicb-series-corrected);
+  /* 2px surface ring keeps the dot legible where it crosses the line. */
+  box-shadow: 0 0 0 2px var(--eicb-surface);
+  flex: none;
+}
+
+/* ---- tables ---- */
+
+.eicb-tablewrap {
+  max-height: 340px;
+  overflow: auto;
+  border: 1px solid var(--eicb-border);
+  border-radius: 8px;
+}
+
+.eicb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.eicb-table caption {
+  padding: 8px 10px;
+  color: var(--eicb-text-secondary);
+  font-size: 12px;
+  text-align: left;
+}
+
+.eicb-table th,
+.eicb-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--eicb-grid);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.eicb-table th:first-child,
+.eicb-table td:first-child {
+  text-align: left;
+}
+
+.eicb-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--eicb-plane);
+  color: var(--eicb-text-secondary);
+  font-weight: 600;
+}
+
+.eicb-table tbody tr:hover,
+.eicb-table tbody tr[data-active] {
+  background: var(--eicb-wash);
+}
+
+.eicb-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--eicb-text);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.eicb-note {
+  margin: 0;
+  color: var(--eicb-muted);
+  font-size: 11.5px;
+}
+
+.eicb-banner {
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid var(--eicb-border);
+  border-left: 3px solid var(--eicb-series-raw);
+  border-radius: 8px;
+  background: var(--eicb-surface);
+  color: var(--eicb-text-secondary);
+  font-size: 12.5px;
+}
+
+.eicb-banner ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.eicb-banner--error {
+  border-left-color: var(--eicb-series-raw);
+  color: var(--eicb-text);
+}
+
+/* ---- plot surface ---- */
+
+.eicb-plot {
+  position: relative;
+  width: 100%;
+}
+
+.eicb-plot canvas {
+  display: block;
+}
+
+.eicb-plot .u-over {
+  cursor: crosshair;
+}
+
+/* Axis, tick and cursor colours are canvas pixels, so they come from `themeFor()` in
+   lib/chart.js rather than from these tokens. */
+
+.eicb-empty {
+  padding: 28px 12px;
+  color: var(--eicb-text-secondary);
+  text-align: center;
+}
+
+.eicb-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

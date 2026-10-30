@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>eicbaselines — baseline-removed EIC viewer</title>
+  </head>
+  <body>
+    <!--
+            Standalone harness. The library is `src/index.js`; this page only mounts
+            `src/AppShell.vue`, which picks the two parquet tables (sample from
+            `test-data/config.json` or the shipped pairs, file picker, or
+            `?raw=<url>&corrected=<url>`) and hands them to the viewer.
+        -->
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
