@@ -41,7 +41,8 @@
     "build": "vite build --config vite.config.lib.js",
     "build:app": "vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write 'package.json' '*.js' '*.html' 'src/**/*.{js,vue,css}'",
+    "lint": "prettier --check 'package.json' '*.js' '*.html' 'src/**/*.{js,vue,css}' 'test-data/*.json'",
+    "prettier": "prettier --write 'package.json' '*.js' '*.html' 'src/**/*.{js,vue,css}' 'test-data/*.json'",
     "test": "vitest --run",
     "test:watch": "vitest --watch"
   },

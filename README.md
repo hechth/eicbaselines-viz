@@ -182,7 +182,11 @@ Authentication relies on the session cookie of the page embedding the visualizat
 
 ```bash
 npm test
+npm run lint    # prettier --check; `npm run prettier` rewrites those same files
 ```
+
+CI runs both, plus the library build, on Node 20, 22 and 24. There is no 18 job: Vite 8
+and its Vue plugin require `^20.19.0 || >=22.12.0` and cannot build there.
 
 106 tests cover the parquet reading, the join (keyed and positional, including the tool's
 real committed output without a group column), the decimation, the chart options, the Galaxy
